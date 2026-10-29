@@ -1,0 +1,4 @@
+@EndUserText.label: 'PW test table 02 - UI service'
+define service ZUI_PW_TST2_01 {
+  expose ZC_PW_TST2_01 as TestLines;
+}

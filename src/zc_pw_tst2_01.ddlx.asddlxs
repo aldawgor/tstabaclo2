@@ -1,0 +1,53 @@
+@Metadata.layer: #CORE
+@UI.headerInfo: {
+  typeName: 'Test Line',
+  typeNamePlural: 'Test Lines',
+  title: { type: #STANDARD, value: 'LineId' },
+  description: { type: #STANDARD, value: 'LineTxt' }
+}
+annotate entity ZC_PW_TST2_01 with
+{
+  @UI.facet: [ {
+                 id: 'General',
+                 purpose: #STANDARD,
+                 type: #IDENTIFICATION_REFERENCE,
+                 label: 'General Information',
+                 position: 10
+               },
+               {
+                 id: 'Admin',
+                 purpose: #STANDARD,
+                 type: #FIELDGROUP_REFERENCE,
+                 targetQualifier: 'Admin',
+                 label: 'Administrative Data',
+                 position: 20
+               } ]
+  @UI.hidden: true
+  LineUuid;
+
+  @UI.lineItem: [ { position: 10, importance: #HIGH } ]
+  @UI.identification: [ { position: 10 } ]
+  @UI.selectionField: [ { position: 10 } ]
+  LineId;
+
+  @UI.lineItem: [ { position: 20, importance: #HIGH } ]
+  @UI.identification: [ { position: 20 } ]
+  @UI.selectionField: [ { position: 20 } ]
+  LineTxt;
+
+  @UI.fieldGroup: [ { qualifier: 'Admin', position: 10 } ]
+  CreatedBy;
+
+  @UI.fieldGroup: [ { qualifier: 'Admin', position: 20 } ]
+  CreatedAt;
+
+  @UI.fieldGroup: [ { qualifier: 'Admin', position: 30 } ]
+  LastChangedBy;
+
+  @UI.lineItem: [ { position: 30, importance: #MEDIUM } ]
+  @UI.fieldGroup: [ { qualifier: 'Admin', position: 40 } ]
+  LastChangedAt;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+}

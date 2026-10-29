@@ -1,0 +1,34 @@
+managed implementation in class zbp_r_pw_tst2_01 unique;
+strict ( 2 );
+
+define behavior for ZR_PW_TST2_01 alias TestLine
+persistent table zpw_tst2_01
+lock master
+authorization master ( none )
+etag master LocalLastChangedAt
+{
+  create;
+  update;
+  delete;
+
+  // key is a UUID assigned by the framework
+  field ( readonly, numbering : managed ) LineUuid;
+
+  // administrative fields are filled by the framework
+  field ( readonly ) CreatedBy, CreatedAt, LastChangedBy, LastChangedAt, LocalLastChangedAt;
+
+  // LineTxt must not contain "boss" (any case); error blocks the save
+  validation validateLineTxt on save { create; update; field LineTxt; }
+
+  mapping for zpw_tst2_01
+  {
+    LineUuid           = line_uuid;
+    LineId             = line_id;
+    LineTxt            = line_txt;
+    CreatedBy          = created_by;
+    CreatedAt          = created_at;
+    LastChangedBy      = last_changed_by;
+    LastChangedAt      = last_changed_at;
+    LocalLastChangedAt = local_last_changed_at;
+  }
+}
