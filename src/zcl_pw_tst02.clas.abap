@@ -36,15 +36,15 @@ CLASS zcl_pw_tst02 IMPLEMENTATION.
     " assigns UUIDs, fills administrative fields and runs the validation
     SELECT LineUuid FROM zr_pw_tst2_01 INTO TABLE @DATA(lt_old).
 
-    " open drafts (e.g. unsaved edits from Fiori) are discarded first
+    " open drafts (e.g. unsaved edits from Fiori) are discarded first;
+    " draft actions always work on drafts, so their keys have no %is_draft
     SELECT lineuuid FROM zpw_tst2_01_d INTO TABLE @DATA(lt_drafts).
 
     IF lt_drafts IS NOT INITIAL.
       MODIFY ENTITIES OF zr_pw_tst2_01
         ENTITY TestLine
           EXECUTE Discard FROM VALUE #( FOR ls_draft IN lt_drafts
-                                        ( %is_draft = if_abap_behv=>mk-on
-                                          LineUuid  = ls_draft-lineuuid ) )
+                                        ( LineUuid = ls_draft-lineuuid ) )
         FAILED DATA(ls_discard_failed).
 
       IF ls_discard_failed IS NOT INITIAL.
