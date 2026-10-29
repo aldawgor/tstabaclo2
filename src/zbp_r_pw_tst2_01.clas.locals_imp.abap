@@ -15,11 +15,16 @@ CLASS lhc_testline IMPLEMENTATION.
       RESULT DATA(lt_lines).
 
     LOOP AT lt_lines INTO DATA(ls_line).
+      " with draft, messages are state messages: clear the previous result of this validation first
+      APPEND VALUE #( %tky        = ls_line-%tky
+                      %state_area = 'VALIDATE_LINETXT' ) TO reported-testline.
+
       " CS (contains string) is case-insensitive: boss, Boss, BOSS ...
       IF ls_line-LineTxt CS 'boss'.
         APPEND VALUE #( %tky = ls_line-%tky ) TO failed-testline.
 
         APPEND VALUE #( %tky             = ls_line-%tky
+                        %state_area      = 'VALIDATE_LINETXT'
                         %msg             = new_message_with_text(
                                              severity = if_abap_behv_message=>severity-error
                                              text     = 'Line Text must not contain "boss"' )
